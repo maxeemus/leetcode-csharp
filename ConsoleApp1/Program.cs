@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 class Application
 {
-    public static void Main() => new MaxSumSubArrayOfSizeK().Test();
+    public static void Main() => new MinSubArrayLenSolution().Test();
 }
 
 // This code is contributed by Sam007 0
