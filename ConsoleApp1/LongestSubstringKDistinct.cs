@@ -40,5 +40,32 @@ namespace ConsoleApp1
 
             return max;
         }
+        
+        public int TotalFruit(int[] tree) 
+        {
+            int k = 2;
+            if((tree?.Length ?? 0) < k)
+                return 0;
+
+            Dictionary<int, int> distCharCounts = new Dictionary<int, int>();
+            int start = 0, end = 0, max = 0;
+            for(end = 0; end < tree.Length; end++)
+            {                
+                if(!distCharCounts.ContainsKey(tree[end]))
+                    distCharCounts[tree[end]] = 0;
+                distCharCounts[tree[end]] += 1;
+
+                while(distCharCounts.Count > k && end > start)
+                {
+                    distCharCounts[tree[start]] -= 1;
+                    if(distCharCounts[tree[start]] == 0)
+                        distCharCounts.Remove(tree[start]);
+                    start++;
+                }
+                max = Math.Max(max, end - start + 1);
+            }
+
+            return max;
+        }
     }
 }
