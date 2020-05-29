@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 class Application
 {
-    public static void Main() => new NumberOfIslands().Test();
+    public static void Main() => new RottingOrangesSolution().Test();
 }
 
 // This code is contributed by Sam007 0
