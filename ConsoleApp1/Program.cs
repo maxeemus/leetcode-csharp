@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 class Application
 {
-    public static void Main() => new RottingOrangesSolution().Test();
+    public static void Main() => LRUCache.Test();
 }
 
 // This code is contributed by Sam007 0
