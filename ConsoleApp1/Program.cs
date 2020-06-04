@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 class Application
 {
-    public static void Main() => PriorityQueue<int>.Test(10000);
+    public static void Main() => MergeKListsSolution.Test();
 }
 
 // This code is contributed by Sam007 0
