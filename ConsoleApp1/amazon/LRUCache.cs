@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -18,6 +19,8 @@ namespace ConsoleApp1.Amazon
             Debug.Assert(cache.Get(1) == -1);
             Debug.Assert(cache.Get(3) == 300);
             Debug.Assert(cache.Get(4) == 400);
+
+            Console.WriteLine("LRUCache is ok!");
 
         }
         private readonly int capacity;
