@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ConsoleApp1.Amazon
 {
@@ -18,7 +19,7 @@ namespace ConsoleApp1.Amazon
     {
         public static void Test()
         {
-            new MergeKListsSolution().MergeKLists(new[]
+            var merged = new MergeKListsSolution().MergeKLists(new[]
             {
                 new ListNode(2, new ListNode(6)),
                 new ListNode(1, new ListNode(4, new ListNode(5))),
