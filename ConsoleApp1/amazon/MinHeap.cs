@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace ConsoleApp1.Amazon
 {
-    public class PriorityQueue<T>
+    public class MinHeap<T>
     {        
         private readonly IComparer<T> comparer;
         public readonly List<T> list = new List<T>();
         public int Count => list.Count;
 
-        public PriorityQueue(IComparer<T> comparer)
+        public MinHeap(IComparer<T> comparer)
         {
             if (comparer is null)
                 throw new ArgumentNullException(nameof(comparer));

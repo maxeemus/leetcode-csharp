@@ -30,7 +30,7 @@ namespace ConsoleApp1.Amazon
         {
             if(lists == null || lists.Length == 0)
                 return null;
-            var pq = new PriorityQueue<ListNode>(Comparer<ListNode>.Create((x, y) => x.val - y.val));
+            var pq = new MinHeap<ListNode>(Comparer<ListNode>.Create((x, y) => x.val - y.val));
             foreach(var l in lists.Where(i => i != null))
             {
                 pq.Enqueue(l);

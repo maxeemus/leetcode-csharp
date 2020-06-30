@@ -17,7 +17,7 @@ namespace ConsoleApp1.Amazon
                                             List<string> possibleFeatures,
                                             int numFeatureRequests,
                                             List<string> featureRequests)
-        {
+        {            
             if(topFeatures <= 0)
                 return new List<string>(0);
             if(possibleFeatures == null || !possibleFeatures.Any())
@@ -26,7 +26,7 @@ namespace ConsoleApp1.Amazon
                 return new List<string>(0);
                     
             // set of possible features
-            var possibleFeaturesSet = new HashSet<string>(possibleFeatures.Select(pf => pf.ToLower()).Distinct(StringComparer.CurrentCultureIgnoreCase));
+            var possibleFeaturesSet = new HashSet<string>(possibleFeatures, StringComparer.CurrentCultureIgnoreCase);
             // map of feature Request words and freq
             var featureRequestsFreq = new Dictionary<string, int>(StringComparer.CurrentCultureIgnoreCase);
             
@@ -37,7 +37,7 @@ namespace ConsoleApp1.Amazon
                 var featureRequestWords = rgx
                     .Replace(featureReq, "") // replace non-alphanumeric
                     .Split() //  split words
-                    .Where(w => possibleFeaturesSet.Contains(w.ToLowerInvariant())) // leave only possible Features                    
+                    .Where(w => possibleFeaturesSet.Contains(w)) // leave only possible Features                    
                     .Distinct(StringComparer.CurrentCultureIgnoreCase); // multiple occurence consider as single
 
                 // Calculate freq.
@@ -51,11 +51,11 @@ namespace ConsoleApp1.Amazon
 
             // Min priority heap
             // priority is max freq. + min alphabetically            
-            var pq = new PriorityQueue<(string feauture, int freq)>(Comparer<(string feauture, int freq)>.Create((x, y) => 
+            var pq = new MinHeap<(string feauture, int freq)>(Comparer<(string feauture, int freq)>.Create((x, y) => 
             {
                 var c =  x.freq - y.freq; 
                 if(c == 0) // the same freq - compare words
-                    return StringComparer.CurrentCultureIgnoreCase.Compare(y.feauture, x.feauture);
+                     return StringComparer.CurrentCultureIgnoreCase.Compare(y.feauture, x.feauture);
                 else 
                     return c;
             }));
@@ -64,16 +64,16 @@ namespace ConsoleApp1.Amazon
             foreach(var frfPair in featureRequestsFreq)
             {
                 pq.Enqueue((frfPair.Key, frfPair.Value));
-                if(pq.Count > topFeatures)
-                    pq.Dequeue();
+                if(pq.Count > topFeatures) 
+                     pq.Dequeue(); // remove min element
             }
             
-            var result = new (string, int) [pq.Count];            
-            int i = 0;
+            var result = new (string, int) [pq.Count];
+            int i = result.Length - 1;
             while(pq.Count > 0)
             {
                 var d = pq.Dequeue();
-                result[i++] = (d.feauture, d.freq);
+                result[i--] = (d.feauture, d.freq);
             }
 
             return result.Select(d => d.Item1).ToList();
