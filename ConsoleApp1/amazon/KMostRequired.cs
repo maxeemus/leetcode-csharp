@@ -68,16 +68,15 @@ namespace ConsoleApp1.Amazon
                      pq.Dequeue(); // remove min element
             }
             
-            var result = new (string, int) [pq.Count];
+            var result = new string[pq.Count];
             int i = result.Length - 1;
             while(pq.Count > 0)
             {
                 var d = pq.Dequeue();
-                result[i--] = (d.feauture, d.freq);
+                result[i--] = d.feauture;
             }
-
-            return result.Select(d => d.Item1).ToList();
+            return result.ToList();
         }
         // METHOD SIGNATURE ENDS
-    }
+    }    
 }
