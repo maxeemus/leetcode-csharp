@@ -8,7 +8,7 @@ namespace ConsoleApp1.Amazon
     public class KMostWords
     {
         public IList<string> TopKFrequent(string[] words, int k) 
-        {
+        {            
             if(!(words?.Any() ?? false) || k <= 0)
                 return new List<string>(0);
             
