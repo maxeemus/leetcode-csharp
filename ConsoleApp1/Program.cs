@@ -6,7 +6,7 @@ using System.Linq;
 
 class Application
 {
-    public static void Main() => PartitionLabelsSolution.Test();
+    public static void Main() => AnalyzeUserWebsiteVisit.Test();
 }
 
 // This code is contributed by Sam007 0
