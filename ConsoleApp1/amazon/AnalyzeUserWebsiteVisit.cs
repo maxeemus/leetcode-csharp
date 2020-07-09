@@ -38,7 +38,9 @@ namespace ConsoleApp1.Amazon
                 new[]{"him","mxcmo","jejuvvtye","wphmqzn","uwlblbrkqv","flntc","esdtyvfs","nig","jejuvvtye","nig","mxcmo","flntc","nig","jejuvvtye","odmspeq","jiufvjy","esdtyvfs","mfieoxff","nig","flntc","mxcmo","qxbrmo"},
                 new[] {113355592,304993712,80831183,751306572,34485202,414560488,667775008,951168362,794457022,813255204,922111713,127547164,906590066,685654550,430221607,699844334,358754380,301537469,561750506,612256123,396990840,60109482},
                 new[]{"k","o","o","nxpvmh","dssdnkv","kiuorlwdcw","twwginujc","evenodb","qqlw","mhpzoaiw","jukowcnnaz","m","ep","qn","wxeffbcy","ggwzd","tawp","gxm","pop","xipfkhac","weiujzjcy","x"}
-            ).Should().Equal(new[]{"m","kiuorlwdcw","xipfkhac"});            
+            ).Should().Equal(new[]{"m","kiuorlwdcw","xipfkhac"});     
+
+            Console.WriteLine("MostVisitedPattern is done!");       
         }
 
         public IList<string> MostVisitedPattern(string[] username, int[] timestamp, string[] website) 
@@ -47,9 +49,9 @@ namespace ConsoleApp1.Amazon
                 return null;
 
             // sort sessions by timestamp O(NLogN)
-            List<(int t, string user, string website)> sessions = timestamp.Select((t, i) => (t, username[i], website[i])).OrderBy(s => s.t).ToList();
+            IEnumerable<(int t, string user, string website)> sessions = timestamp.Select((t, i) => (t, username[i], website[i])).OrderBy(s => s.t);
 
-            // get users all visited sequences O(N)            
+            // group websites by username O(N)
             Dictionary<string, List<string>> userWebsites = new Dictionary<string, List<string>>();
             foreach(var s in sessions)
             {
@@ -67,23 +69,16 @@ namespace ConsoleApp1.Amazon
                 var user3Seqs = All3Sequences(uws);
                 foreach(var u3s in user3Seqs)
                 {
-                    var key = (u3s[0], u3s[1], u3s[2]);
+                    var key = (u3s[0], u3s[1], u3s[2]);                    
                     if(!freq3Seqs.ContainsKey(key))
                         freq3Seqs.Add(key, 0);
                     freq3Seqs[key]++;
-                    if(freq3Seqs[key] > maxVisit)
+                    
+                    if(freq3Seqs[key] > maxVisit || (freq3Seqs[key] == maxVisit && LexiCompare(u3s, maxSequince) < 0))
                     {
                         maxSequince = u3s;
                         maxVisit = freq3Seqs[key];
-                    }
-                    else if(freq3Seqs[key] == maxVisit) // lexicographically smallest 
-                    {                        
-                        if(LexiCompare(u3s, maxSequince) < 0)
-                        {
-                            maxSequince = u3s;
-                            maxVisit = freq3Seqs[key];
-                        }
-                    }
+                    }                    
                 }
             }
             
@@ -101,25 +96,26 @@ namespace ConsoleApp1.Amazon
             return 0;
         }
         
-        private IList<string[]> All3Sequences(IList<string> s)
-        {
-            List<string[]> result = new List<string[]>();
-
+        private IEnumerable<string[]> All3Sequences(IList<string> s)
+        {            
             int start = 0;
             int end = (s?.Count ?? 0) - 1;
             if(end - start < 2)
-                return result;
+                yield break;
 
-            HashSet<(string, string, string)> uniq = new HashSet<(string, string, string)>();
-            int limitPoint = end - 2;            
-            for(int i = start; i<=limitPoint; i++)
-            for(int j = i + 1; j <= limitPoint + 1; j++)
+            HashSet<(string, string, string)> uniq = new HashSet<(string, string, string)>();            
+            for(int i = start; i<= end - 2; i++)
+            for(int j = i + 1; j <= end - 1; j++)
             for(int k = j + 1; k <= end; k++)
             {                
-                uniq.Add((s[i], s[j], s[k]));
+                var key = (s[i], s[j], s[k]);
+                if(!uniq.Contains(key))
+                {
+                    uniq.Add(key);
+                    yield return new[]{s[i], s[j], s[k]};
+                }
             }
 
-            return uniq.Select(t => new[]{t.Item1, t.Item2, t.Item3}).ToList();
         }
     }
 }
