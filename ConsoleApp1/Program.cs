@@ -6,7 +6,7 @@ using System.Linq;
 
 class Application
 {
-    public static void Main() => MaxWidthOfBinTree.Test();
+    public static void Main() => SwapMaxRepeatedCharSubstring.Test();
 }
 
 // This code is contributed by Sam007 0
