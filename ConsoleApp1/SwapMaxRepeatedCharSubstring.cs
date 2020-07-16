@@ -48,28 +48,28 @@ namespace ConsoleApp1
 
             // 2 - sliding window to find longest same char substring 
             Dictionary<char, int> charCounts = new Dictionary<char, int>(2);
-            int left = 0, righ = 0, max = 0;
+            int left = 0, right = 0, max = 0;
             bool isSwapped = false;
             int swappingPos = -1;
             int swappedPos = -1;
-            for (righ = 0; righ < text.Length; righ++)
+            for (right = 0; right < text.Length; right++)
             {
                 // if been swapped and right is on swapped value
-                if (isSwapped && righ == swappingPos)
+                if (isSwapped && right == swappingPos)
                 {
                     max = Math.Max(max, charCounts.Select(a => a.Value).Max());
-                    righ++;
-                    if (righ >= text.Length)
+                    right++;
+                    if (right >= text.Length)
                         return max;
-                    left = righ;
+                    left = right;
                     charCounts.Clear();
                     isSwapped = false;
                     swappingPos = -1;
                 }
                 // increase char count in window
-                if (!charCounts.ContainsKey(text[righ]))
-                    charCounts[text[righ]] = 0;
-                charCounts[text[righ]] += 1;
+                if (!charCounts.ContainsKey(text[right]))
+                    charCounts[text[right]] = 0;
+                charCounts[text[right]] += 1;
 
                 if (charCounts.Count > 1) // new char is another
                 {
@@ -77,7 +77,7 @@ namespace ConsoleApp1
                     if (!isSwapped)
                     {
                         var l = left;
-                        var r = righ;
+                        var r = right;
                         // !
                         if (charCounts[text[l]] == charCounts[text[r]] && r + 1 < text.Length && text[r + 1] == text[r])
                             (l, r) = (r, l);
@@ -87,31 +87,31 @@ namespace ConsoleApp1
                         {
                             charCounts.Remove(text[r]);
                             charCounts[text[l]] += 1;
-                            swappedPos = righ;
+                            swappedPos = right;
                             isSwapped = true;
                         }
-                        else if (righ < maxPos) // then maxPos
+                        else if (right < maxPos) // then maxPos
                         {
                             charCounts.Remove(text[r]);
                             charCounts[text[l]] += 1;
                             swappingPos = maxPos;
-                            swappedPos = righ;
+                            swappedPos = right;
                             isSwapped = true;
                         }
                         else
                         {
                             max = Math.Max(max, charCounts.Select(a => a.Value).Max());
                             charCounts.Clear();
-                            left = righ;
+                            left = right;
                             charCounts[text[left]] = 1;
                         }
                     }
                     // 2 - has been swapped -> reset swaping context
                     else
                     {
-                        max = Math.Max(max, charCounts.Select(a => a.Value).Max());
-                        righ = swappedPos;
-                        left = swappedPos;
+                        max = Math.Max(max, charCounts.Select(a => a.Value).Max());                         
+                        right = swappedPos;
+                        left = swappedPos;                        
                         charCounts.Clear();
                         charCounts[text[left]] = 1;
                         isSwapped = false;
