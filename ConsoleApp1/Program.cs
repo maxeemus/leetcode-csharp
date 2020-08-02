@@ -7,7 +7,7 @@ using System.Linq;
 
 class Application
 {
-    public static void Main() => LoggerRateLimiter.Test();
+    public static void Main() => MyHashSet.Test();
 }
 
 // This code is contributed by Sam007 0
