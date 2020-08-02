@@ -24,7 +24,7 @@ namespace Challenges.Aug2020
             hashSet.Contains(12653445).Should().Be(false);
         }
         
-        private const int hashBase = 100;
+        private const int hashBase = 1009; // prime number -> less collisions
         private readonly LinkedList<int>[] buckets = new LinkedList<int>[hashBase];
         
         /** Initialize your data structure here. */
