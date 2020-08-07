@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using ConsoleApp1.Common;
 
 namespace ConsoleApp1.Amazon
 {

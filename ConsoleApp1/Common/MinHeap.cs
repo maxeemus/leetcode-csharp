@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ConsoleApp1.Amazon
+namespace ConsoleApp1.Common
 {
     public class MinHeap<T>
     {        
