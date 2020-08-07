@@ -7,7 +7,7 @@ using System.Linq;
 
 class Application
 {
-    public static void Main() => MyHashSet.Test();
+    public static void Main() => VerticalOrderTreeTraversal.Test();
 }
 
 // This code is contributed by Sam007 0
