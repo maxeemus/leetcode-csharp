@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ConsoleApp1.Common;
 using FluentAssertions;
 
 namespace ConsoleApp1
@@ -13,8 +14,8 @@ namespace ConsoleApp1
     {
         public static void Test()
         {            
-            new MaxWidthOfBinTree().WidthOfBinaryTree(TreeNode.Build(new int?[] { 1,3,2,5,3,null,9 })).Should().Be(4); 
-            new MaxWidthOfBinTree().WidthOfBinaryTree(TreeNode.Build(new int?[] { 1,3,2,5 })).Should().Be(2); 
+            new MaxWidthOfBinTree().WidthOfBinaryTree(TreeNode.Create(new int?[] { 1,3,2,5,3,null,9 })).Should().Be(4); 
+            new MaxWidthOfBinTree().WidthOfBinaryTree(TreeNode.Create(new int?[] { 1,3,2,5 })).Should().Be(2); 
             //new MaxWidthOfBinTree().WidthOfBinaryTree(TreeNode.Build(new int?[] { 1,1,1,1,null,null,1,1,null,null,1 })).Should().Be(8); 
 
             new MaxWidthOfBinTree().WidthOfBinaryTree(
@@ -31,38 +32,7 @@ namespace ConsoleApp1
                     ))
             ).Should().Be(3); 
         }
-
-        public class TreeNode
-        {
-            public static TreeNode Build(int?[] array)
-            {
-                var nodes = array?.Select(v => v.HasValue ? new TreeNode(v.Value) : null).ToArray();                     
-                foreach(var item in nodes?.Select((node, i) => (node, i)))
-                {
-                    if (item.node != null)
-                    {
-                        int left = item.i * 2 + 1;
-                        int right = item.i * 2 + 2;
-                        if (left < array.Length)
-                            item.node.left = nodes[left];
-                        if (right < array.Length)
-                            item.node.right = nodes[right];
-                    }                    
-                }
-                return nodes?.Where(node => node != null).FirstOrDefault();
-            }
-            
-            public int val;
-            public TreeNode left;
-            public TreeNode right;
-            public TreeNode(int val = 0, TreeNode left = null, TreeNode right = null)
-            {
-                this.val = val;
-                this.left = left;
-                this.right = right;
-            }
-        }
-
+        
         public int WidthOfBinaryTree(TreeNode root)
         {
             int maxWidth = 1;
