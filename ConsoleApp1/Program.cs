@@ -5,9 +5,12 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 
-class Application
+namespace ConsoleApp1
 {
-    public static void Main() => VerticalOrderTreeTraversal.Test();
+    class Application
+    {
+        public static void Main() => ReverseLinkedList.Test();
+    }
 }
 
 // This code is contributed by Sam007 0
