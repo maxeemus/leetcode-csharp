@@ -89,7 +89,7 @@ namespace ConsoleApp1.Amazon
         {                        
             for(int i = 0; i < x.Length; i++)
             {
-                var r = StringComparer.InvariantCultureIgnoreCase.Compare(x[i], y[i]);
+                var r = StringComparer.OrdinalIgnoreCase.Compare(x[i], y[i]);
                 if(r != 0 )
                     return r;
             }

@@ -115,7 +115,7 @@ namespace ConsoleApp1
                         charCounts.Clear();
                         charCounts[text[left]] = 1;
                         isSwapped = false;
-                        swappingPos = -1;
+                        swappingPos = -1;                        
                     }
                 }
                 else

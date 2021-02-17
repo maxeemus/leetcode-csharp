@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ConsoleApp1.Common
 {
+    // MinHeap - Min Priority Queue
+    // use list as a heap tree representation
     public class MinHeap<T>
     {        
         private readonly IComparer<T> comparer;
@@ -18,17 +21,22 @@ namespace ConsoleApp1.Common
 
         public void Enqueue(T value)
         {
+            // add new value to the end of a heap list
             list.Add(value);
-            int last = list.Count - 1;
-            while (last > 0)
+            int valuePos = list.Count - 1;
+            while (valuePos > 0)
             {
-                int p = (last - 1) / 2;
-                if (comparer.Compare(list[last], list[p]) >= 0)
+                int valueParentPosition = (valuePos - 1) / 2;
+                // if parent less that new value then stop else swap parent and new value and set valuePos to parent
+                if (comparer.Compare(list[valuePos], list[valueParentPosition]) >= 0)
                     break;
-                (list[last], list[p]) = (list[p], list[last]);
-                last = p;
+                else
+                {
+                    (list[valuePos], list[valueParentPosition]) = (list[valueParentPosition], list[valuePos]);
+                    valuePos = valueParentPosition;
+                }
             }
-        }
+        }        
 
         public T Dequeue()
         {
@@ -38,19 +46,30 @@ namespace ConsoleApp1.Common
             list.RemoveAt(last);
 
             last = list.Count - 1;
-            int p = 0;
+            int parentPos = 0;
+            
             while (true)
             {
-                int c = p * 2 + 1;
-                if (c > last)
+                int leftChildPos = parentPos * 2 + 1;
+                int rightChildPos = leftChildPos + 1;
+                int minChildPos = -1;
+                
+                if (leftChildPos > last)
                     break;
-                int rc = c + 1;
-                if (rc <= last && comparer.Compare(list[rc], list[c]) < 0)
-                    c = rc;
-                if (comparer.Compare(list[p], list[c]) <= 0)
+                                
+                if (rightChildPos <= last && comparer.Compare(list[rightChildPos], list[leftChildPos]) < 0)
+                    minChildPos = rightChildPos;
+                else
+                    minChildPos = leftChildPos;
+
+                // parent <= minChild then stop else swap parent and min child and set parent to min child
+                if (comparer.Compare(list[parentPos], list[minChildPos]) <= 0)
                     break;
-                (list[p], list[c]) = (list[c], list[p]);
-                p = c;
+                else
+                {
+                    (list[parentPos], list[minChildPos]) = (list[minChildPos], list[parentPos]);
+                    parentPos = minChildPos;
+                }
             }
             return min;
         }
