@@ -13,7 +13,75 @@ namespace ConsoleApp1
     {
         public static void Main()
         {
+            var originNums = new[]{17,25,-45, 35,51,-18,33,41,19,10,40,25,44,55,25};
             
+            
+            var nums = originNums.Clone() as int[];
+            new QuickSelect<int>().Select(nums, 0);
+
+            nums = originNums.Clone() as int[];
+            new QuickSelect<int>().Select(nums, nums.Length);
+
+            nums = originNums.Clone() as int[];
+            new QuickSelect<int>().Select(nums, nums.Length + 1);
+
+
+            nums = originNums.Clone() as int[];
+            new QuickSelect<int>().Select(nums, 1);
+
+            nums = originNums.Clone() as int[];
+            new QuickSelect<int>().Select(nums, 2);
+
+            nums = originNums.Clone() as int[];
+            new QuickSelect<int>().Select(nums, nums.Length - 1);
+
+            nums = originNums.Clone() as int[];
+            new QuickSelect<int>().Select(nums, nums.Length - 2);
+
+
+
+            nums = originNums.Clone() as int[];
+            new QuickSelect<int>().Select(nums, 4);
+            
+            nums = originNums.Clone() as int[];
+            new QuickSelect<int>().Select(nums, 6);
+
+            nums = originNums.Clone() as int[];
+            new QuickSelect<int>().Select(nums, 8);            
+        }
+
+        public static void QuickSelect(int[] nums, int k)
+        {
+            if(k < 1 || k > nums.Length - 1)
+                return;
+
+            QuickSelect(nums, k, 0, nums.Length - 1);
+        }
+
+        private static void QuickSelect(int[] nums, int k, int l, int r)
+        {
+            int p = Pivot(nums, l - 1, l, r);
+            if(p == k) 
+                return;
+            else if(k > p)
+                QuickSelect(nums, k, p + 1, r);
+            else
+                QuickSelect(nums, k, l, p - 1);
+        }
+
+        public static int Pivot(int[] nums, int i, int j, int p)
+        {
+            for(; j < p; j++)
+            {
+                if(nums[j] <= nums[p])
+                {
+                    i++;
+                    if(i != j) (nums[i], nums[j]) = (nums[j], nums[i]);
+                }                
+            }      
+            i++;
+            (nums[i], nums[p]) = (nums[p], nums[i]);
+            return i;
         }
 
         public static int FindMin(int[] nums)
