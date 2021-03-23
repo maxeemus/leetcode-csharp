@@ -12,6 +12,8 @@ namespace ConsoleApp1.Common
         public readonly List<T> list = new List<T>();
         public int Count => list.Count;
 
+        public MinHeap() : this(Comparer<T>.Default) {}
+        
         public MinHeap(IComparer<T> comparer)
         {
             if (comparer is null)
