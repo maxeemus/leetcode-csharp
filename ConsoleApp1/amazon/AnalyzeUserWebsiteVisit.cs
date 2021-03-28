@@ -86,14 +86,20 @@ namespace ConsoleApp1.Amazon
         }
 
         private int LexiCompare(string[] x, string[] y)
-        {                        
-            for(int i = 0; i < x.Length; i++)
-            {
-                var r = StringComparer.OrdinalIgnoreCase.Compare(x[i], y[i]);
-                if(r != 0 )
-                    return r;
-            }
-            return 0;
+        {
+        int l = Math.Min(x.Length, y.Length);
+        for(int i = 1; i < l; i++)
+        {
+            var r = StringComparer.OrdinalIgnoreCase.Compare(x[i], y[i]);
+            if(r != 0)
+            return r;
+        }
+        if(x.Length == y.Length)
+            return StringComparer.OrdinalIgnoreCase.Compare(x[0], y[0]);
+        else if(x.Length < y.Length)
+            return -1;
+        else
+            return 1;
         }
         
         private IEnumerable<string[]> All3Sequences(IList<string> s)

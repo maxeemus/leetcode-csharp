@@ -13,7 +13,7 @@ namespace ConsoleApp1
     {
         public static void Main()
         {
-            var a = new MaxAreaOfPiece().MaxArea(1000000000, 1000000000, new[]{1}, new[]{1});
+            var a = new MaxAreaOfPiece().MaxArea(5, 4, new[]{1,2,4}, new[]{1, 3});
             a = 0;
         }        
     }
