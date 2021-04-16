@@ -1,0 +1,87 @@
+// 1. Dilivery person -> message of ready to pick up
+// 2. Customet has Order id -> open -> message of delivering
+
+namespace Amazon.Lock
+{
+    public interface IDeliveryPerson
+    {
+        string Code {get;}
+    }
+    
+    public interface IOrder
+    {
+        string Number {get;}
+    }
+    
+    public interface IDeliveryTarget
+    {
+        IDeliveryResult Deliver(IDeliveryPerson deleveryPerson);
+    }
+    
+    public interface IPickupSource
+    {
+        IPickupResult Pickup(IOrder order);
+    }
+    
+    public interface IParcel 
+    {
+        string OrderNumber {get;}
+        Size ParcelSize {get;}
+    }
+    
+    public class LockBox : IDeliveryTarget, IPickupSource
+    {
+        public readonly string Number {get;}
+        public virtual int TotalCells {get;}
+        public int OcupiedCells {get;}
+        
+        
+        LockBox(string number, IDeliveryNotifications deliveryNotifications)
+        {
+            this.deliveryNotifications = deliveryNotifications;
+        }
+        
+        private Dictionary<string, Cell> ocupiedCells;
+        private SortedList<Cells> cells = new SortedList(Comparer.Create(c => c.CellSize));
+        
+        
+    
+        public IDeliveryResult Deliver(IDeliveryPerson deleveryPerson, IParcel parcel)
+        {
+            var appropriateCell = FindCellForParcel(parcel);
+            if(appropriateCell == null)
+                return new DeliveryResult(false, "No free cells");
+            
+            approriateCell.Put(parcel);
+            ocupiedCells.Add(parcel.OrderNumber, approriateCell);
+            approriateCell.IsOccupied = true;
+            
+            deliveryNotifications.Send(approriateCell, parcel);
+            
+            return new DeliveryResult(true, approprateParcell);
+        }
+        
+        public IPickupResult Pickup(IOrder order)
+        {
+            parcelCell = ocupiedCells[order.OrderNumber];
+            if(parcelCell == null)   
+                return new PickupResult(false, "no order cell");
+            
+            ocupiedCells.Remove(order.OrderNumber);
+            approriateCell.IsOccupied = false;
+            pickupNotification.Send(order);
+            
+            return new new PickupResult(true);
+        }
+        
+        
+        
+        
+    }
+    
+    private class Cell
+    {
+        public bool IsAccupied {get; set}
+        public Size CellSize {get;}
+    }
+}

@@ -1,0 +1,55 @@
+//Can you write me a function to take a string and decrease all costs in the string by 15%? 
+//An example string would be "I spent $52.50 on Amazon this week 63.52".
+// "I spent $(=52.50 - 15%) on Amazon this week".
+
+// "I wish I could invest $19,000.12"
+// "I wish I could invest $ 19,000.12"
+
+// "The price is $54.43."
+// "I wish I could invest $19,000.12"
+// "It would be nice if this $100.00 bag only cost $85.00"
+
+namespace Application
+{
+    public class Program
+    {
+        public static void Main()
+        {
+            regex = new RegExp(regexPattern, ....Compiled);
+        }
+        
+        static string regexPattern = "[REGEX_PATTERN]";
+        static RegExp rexp = null; 
+        
+        private static  string Minus15(string s)
+        {
+            if(string.IsNullOrWhiteSpace(s))
+                return s;
+            
+            IEnumerable<string> numbersStr = regex.Find(s, ....).Distinct();
+            List<(int pos, string org, string new)> replaces = new List<(int pos, string org, string new)>();
+            foreach(var numStr in numbersStr)
+            {
+                var normalNumStr = numStr.Replace(",", "")
+                decimal num = decimal.Parse(numStr);
+                num -= num*0.15;
+                newStr = $"{num:c}";
+                var positions = s.IndexesOf(numStr).Select(i => (i, numStr, newStr));
+                replaces.AddRange(positions);
+            }
+            
+            // Apply replaces
+            StringBuilder sb = new StringBuilder();
+            int i = 0;
+            foreach(var r in replaces)
+            {
+                sb.Append(s.Substring(i, r.pos - 1)).Append(r.newStr);
+                i += r.org.Length;
+            }
+            
+            return sb;
+            
+        }
+    }
+}
+

@@ -29,10 +29,10 @@ namespace ConsoleApp1.Common
             while (valuePos > 0)
             {
                 int valueParentPosition = (valuePos - 1) / 2;
-                // if parent less that new value then stop else swap parent and new value and set valuePos to parent
+                // if parent less that new value then stop
                 if (comparer.Compare(list[valuePos], list[valueParentPosition]) >= 0)
                     break;
-                else
+                else // else swap parent and new value and set valuePos to parent
                 {
                     (list[valuePos], list[valueParentPosition]) = (list[valueParentPosition], list[valuePos]);
                     valuePos = valueParentPosition;

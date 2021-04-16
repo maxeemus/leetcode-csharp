@@ -1,0 +1,60 @@
+// Given a list of words, return a list of grouped anagrams.
+// An anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+// "listen" is anagram of "silent"
+// Example:
+// ["binary", "abode", "listen", "cat", "ate", "brainy", "adobe", "tac", "eat", "act", "tea", "silent"]
+
+//[["binary", "brainy"], ["abode", "adobe"], ["cat", "act", "tac"], ["tea", "eat", "ate"]]
+
+namespace Application
+{
+    public class Programm
+    {
+        public static void Main()
+        {
+            var annagramGroups = FindAnnagrams(new[]{"binary", "abode", "listen", "cat", "ate", "brainy", "adobe", "tac", "eat", "act", "tea", "silent"});
+        }
+        
+        private static IEnumerable<List<string>> FindAnnagrams(string[] words)
+        {
+            var dict = new Dictionary<int, List<string>>();
+            foreach(var w in words)
+            {
+                char[] keyChars = w.ToArray();
+                Array.Sort(keyChars);
+                int key = (new string(keyChars)).GetHasjCode();
+                if(!dict.Contains(key))
+                    dict.Add(key, new List<string>(){w});
+                else
+                    dict[key].Add(w)
+            }
+            
+            return dict.Values; // List<List<String>>
+        }
+        
+        private int GetAnnagramHash(string w)
+        {
+            int key = 0;
+            foreach(char c in w)
+            {
+                key |= c - 'a'
+            }
+            
+            return key;
+        }
+        
+        
+        26 letter -> 32 -> int
+        // HashMap
+        a - 0
+        b - 1
+        c - 2
+        .....
+        binary
+        b - 2 - 
+        ab - 11
+        ba - 11
+        aab 
+        aba
+    }
+}
